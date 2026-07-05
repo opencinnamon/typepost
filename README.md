@@ -1,7 +1,7 @@
 
 <p align="center">
   <a href="https://tposts.mtgoals.cc">
-  <img src="http://cdn.mtgoals.cc/images/typepostlogo.png" width="200" />
+  <img src="http://cdn.mtgoals.cc/images/typepostlogo.gif" width="200" />
 </p>
 
 <p align="center">
