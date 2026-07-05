@@ -21,6 +21,10 @@
 
   <br/><br/>
 
+> [!NOTE]
+> Typepost is currently in beta, so unexpected issues may occur.
+> Changes will happen constantly. If you find a bug, report it to us via Discord.
+
 ### Typepost
 
 Typepost is a remake of "[monkeypost](https://posts.mtgoals.cc)", but it is not a straight copy and it changes quite a few things in how it works and feels.
