@@ -29,6 +29,7 @@
   --link: #0000ee;
   --link-visited: #551a8b;
   --greentext: #789922;
+  --quotetext: #8a5a44;
 
   /* -- category nav -- */
   --nav-bg: #6b7f9e;
@@ -399,6 +400,15 @@ a:visited {
   font-weight: bold;
   margin-right: 6px;
 }
+.op-tag {
+  color: var(--header-bg-dark);
+  font-weight: bold;
+  font-size: 11px;
+  margin-right: 6px;
+  background: #dde5ef;
+  padding: 1px 4px;
+  border-radius: 2px;
+}
 .post-time {
   color: var(--text-meta);
   margin-right: 6px;
@@ -418,6 +428,46 @@ a:visited {
 }
 .quote-link {
   color: var(--link);
+}
+.tilde-quote {
+  color: var(--quotetext);
+  display: block;
+}
+.quote-expand-wrap {
+  position: relative;
+}
+.quote-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1;
+  background: var(--board-bg-alt);
+  border: 1px solid var(--input-border);
+  color: var(--text-meta);
+  cursor: pointer;
+  margin-top: 3px;
+  padding: 0;
+}
+.quote-expand-btn:hover {
+  background: #f0f0f0;
+}
+
+.reply-trigger-btn {
+  font-size: 11px;
+  color: var(--greentext);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 6px;
+  font-family: var(--sans);
+}
+.reply-trigger-btn:hover {
+  text-decoration: underline;
 }
 
 .reply-link-inline {
