@@ -13,6 +13,12 @@
   <img src="https://img.shields.io/github/license/opencinnamon/typepost" />
   <img src="https://img.shields.io/github/last-commit/opencinnamon/typepost" />
 
+  <p align="center">
+  <a href="#typepost">About</a> •
+  <a href="#hosting">Hosting</a> •
+  <a href="#local-development">Local Hosting</a>
+</p>
+
   <br/><br/>
 
 ### Typepost
