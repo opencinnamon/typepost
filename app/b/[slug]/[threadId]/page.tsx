@@ -3,8 +3,7 @@ import Link from "next/link";
 import { getBoardBySlug } from "@/lib/boards";
 import { createServerClient } from "@/lib/supabase/server";
 import type { Post, Thread } from "@/lib/types";
-import { PostView } from "@/components/PostView";
-import { PostForm } from "@/components/PostForm";
+import { ThreadReplies } from "@/components/ThreadReplies";
 import { QuoteHighlighter } from "@/components/QuoteHighlighter";
 import { SetupRequiredNotice } from "@/components/SetupRequiredNotice";
 
@@ -55,35 +54,16 @@ export default async function ThreadPage({
         {thread.id}
       </div>
 
-      <PostView
-        post={thread as Thread}
-        variant="op"
-        boardSlug={board.slug}
-        threadId={thread.id}
-      />
-
       {postsError && (
         <p className="form-error">Couldn&apos;t load replies: {postsError.message}</p>
       )}
 
-      {posts && posts.length > 0 && (
-        <div style={{ marginTop: 10 }}>
-          {(posts as Post[]).map((post) => (
-            <PostView
-              key={post.id}
-              post={post}
-              variant="reply"
-              boardSlug={board.slug}
-              threadId={thread.id}
-            />
-          ))}
-        </div>
-      )}
-
-      <div className="reply-box">
-        <h3>Post a reply</h3>
-        <PostForm mode="reply" boardSlug={board.slug} threadId={thread.id} />
-      </div>
+      <ThreadReplies
+        op={thread as Thread}
+        posts={(posts as Post[]) ?? []}
+        boardSlug={board.slug}
+        threadId={thread.id}
+      />
     </div>
   );
 }
