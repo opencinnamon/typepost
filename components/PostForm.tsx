@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, FormEvent } from "react";
+import { useRef, useState, useEffect, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 
 interface PostFormProps {
@@ -8,15 +8,37 @@ interface PostFormProps {
   boardSlug: string;
   threadId?: number;
   onSuccess?: () => void;
+  /** Pre-fills the comment textarea, e.g. from a quote-reply click.
+   * Uses defaultValue since the textarea is uncontrolled -- the parent
+   * remounts this component with a new `key` when it wants to change
+   * this after initial mount (see ThreadReplies.tsx). */
+  initialBody?: string;
 }
 
-export function PostForm({ mode, boardSlug, threadId, onSuccess }: PostFormProps) {
+export function PostForm({ mode, boardSlug, threadId, onSuccess, initialBody }: PostFormProps) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const bodyRef = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
+
+  // When pre-filled from a quote-reply click, put the cursor at the end
+  // (after the quoted "~" lines and blank line) rather than the default
+  // start-of-textarea, so the person can start typing their response
+  // immediately without manually clicking past the quote first.
+  useEffect(() => {
+    if (initialBody && bodyRef.current) {
+      const el = bodyRef.current;
+      el.focus();
+      el.setSelectionRange(el.value.length, el.value.length);
+    }
+    // Only run on mount -- this component is remounted via `key` in
+    // ThreadReplies.tsx whenever initialBody changes, so there's no
+    // need to react to initialBody changing on an already-mounted instance.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -111,7 +133,13 @@ export function PostForm({ mode, boardSlug, threadId, onSuccess }: PostFormProps
           <tr>
             <td className="label">Comment</td>
             <td>
-              <textarea name="body" maxLength={4000} rows={4} />
+              <textarea
+                ref={bodyRef}
+                name="body"
+                maxLength={4000}
+                rows={4}
+                defaultValue={initialBody}
+              />
             </td>
           </tr>
           <tr>
