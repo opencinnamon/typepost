@@ -1,5 +1,6 @@
 import { formatPostBody } from "@/lib/formatPost";
 import { formatPostTime } from "@/lib/formatTime";
+import { toCdnUrl } from "@/lib/imageCdn";
 import type { Post, Thread } from "@/lib/types";
 
 interface PostViewProps {
@@ -13,6 +14,11 @@ interface PostViewProps {
   showThreadLink?: boolean;
   boardSlug: string;
   threadId: number;
+  /** When provided, shows a green "reply" button before the timestamp
+   * that quotes this post's full text (prefixed with ~) into the
+   * thread's reply form. Only passed on the thread page's reply list --
+   * board-index previews and the OP itself don't get this button. */
+  onQuoteReply?: (postBody: string) => void;
 }
 
 export function PostView({
@@ -21,20 +27,22 @@ export function PostView({
   showThreadLink = false,
   boardSlug,
   threadId,
+  onQuoteReply,
 }: PostViewProps) {
   const subject = "subject" in post ? post.subject : null;
+  const displayImageUrl = post.image_url ? toCdnUrl(post.image_url) : null;
 
   return (
     <div className={`post ${variant} clearfix`} id={`p${post.id}`}>
-      {post.image_url && (
+      {displayImageUrl && (
         <div className="post-image-wrap">
           {/* Intentionally a plain <img>, not next/image: post images come
               from arbitrary user uploads in Supabase Storage, and this
               needs to render exactly like a classic imageboard thumbnail
               (fixed max-size box, no blur-up/layout-shift handling). */}
-          <a href={post.image_url} target="_blank" rel="noopener noreferrer">
+          <a href={displayImageUrl} target="_blank" rel="noopener noreferrer">
             <img
-              src={post.image_url}
+              src={displayImageUrl}
               alt=""
               width={post.image_width ?? undefined}
               height={post.image_height ?? undefined}
@@ -51,6 +59,16 @@ export function PostView({
       <div className="post-header">
         {subject && <span className="post-subject">{subject}</span>}
         <span className="post-name">{post.name}</span>
+        {variant === "op" && <span className="op-tag">## OP</span>}
+        {onQuoteReply && (
+          <button
+            type="button"
+            className="reply-trigger-btn"
+            onClick={() => onQuoteReply(post.body)}
+          >
+            reply
+          </button>
+        )}
         <span className="post-time">{formatPostTime(post.created_at)}</span>
         <a href={`/b/${boardSlug}/${threadId}#p${post.id}`} className="post-id-link">
           No.{post.id}
