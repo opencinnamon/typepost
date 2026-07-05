@@ -35,6 +35,8 @@ Moderation is kept very light. Posts are not heavily filtered or controlled, but
 
 The design takes inspiration from 4chan. It is intentionally simple and minimal, with a focus on speed and readability instead of modern social media styling. The layout is meant to feel familiar to anyone who has used traditional imageboard-style sites, where content comes first and everything else is secondary.
 
+---
+
 ### Hosting
 
 You can host Typepost yourself using Supabase by forking this repository and setting up your own instance. All of the required database setup and configuration steps are included in the Supabase folder here: https://github.com/opencinnamon/typepost/tree/main/supabase.
@@ -44,6 +46,8 @@ Inside that folder you will find the SQL and setup instructions needed to get ev
 You will also need to create a storage bucket called `typepost-images`. This is used for image uploads when users create posts. You can rename the bucket if you want, but if you do, you will need to update the corresponding references in the codebase so uploads continue to work correctly.
 
 This project is open source under the MIT License, so you are free to fork and modify it. If you do use it or build on top of it, you are expected to provide credit to the original author (Kiirod) or include a link back to this repository.
+
+---
 
 ### Local Development
 
